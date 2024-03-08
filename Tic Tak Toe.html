@@ -1,0 +1,127 @@
+<html>
+<head>
+<style>
+body{
+background-color:lightgreen;
+text-align:center;
+
+}
+.con{
+height:70vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+.boxes{
+padding:5px;
+display:flex;
+flex-wrap:wrap;
+height:60vh;
+width:60vh;
+gap:2px 2px;
+
+}
+#reset-btn{
+width:20vmin;
+height:7vmin;
+border-radius:10px;
+}
+.box{
+height:18vmin;
+width:18vmin;
+border-radius:10px;
+font-size:9vmin;
+background-color:white;
+}
+</style>
+<body>
+<h1 id="msg"></h1>
+<h1>Tic Tak toe</h1>
+<div class="con">
+<div class="boxes">
+<button class="box"></button>
+<button class="box"></button>
+<button class="box"></button>
+<button class="box"></button>
+<button class="box"></button>
+<button class="box"></button>
+<button class="box"></button>
+<button class="box"></button>
+<button class="box"></button>
+</div>
+
+</div>
+<button id="reset-btn">reset</button>
+<div id="winner"></div>
+<script>
+let boxes=document.querySelectorAll(".box");
+let reset=document.querySelector("#reset-btn");
+let msg=document.querySelector("#msg");
+let turn0="true";
+const win=[[0,1,2],[0,3,6],[0,4,8],[1,4,7],[2,5,8],[2,4,6],[3,4,5],[6,7,8]];
+ 
+
+const resetgame = () => {
+turn0=true;
+enable();
+msg.innerHTML="";
+};
+
+const enable=()=>{
+for(let box of boxes){
+box.disabled=false;
+box.innerHTML="";
+}
+};
+
+ 
+const disable=()=>{
+for(let box of boxes){
+box.disabled=true;
+}
+};
+
+
+
+boxes.forEach((box) => {
+box.addEventListener("click",() => {
+if(turn0==="true"){
+box.innerHTML="x";
+turn0="false";
+box.disabled=true;
+}
+else{
+box.innerHTML="o";
+turn0="true";
+box.disabled=true;
+}
+checkwinner();
+});
+
+});
+
+const showwinner = (winner) =>{
+msg.innerHTML="Winner is"+" "+winner;
+disable();
+};
+
+const checkwinner=()=>{
+for(let pattern of win){
+let p1=boxes[pattern[0]].innerHTML;
+let p2=boxes[pattern[1]].innerHTML;
+let p3=boxes[pattern[2]].innerHTML;
+if(p1!="" && p2!="" && p3!=""){
+if(p1===p2 && p2===p3){
+showwinner(p1);
+}
+}
+}
+};
+
+
+reset.addEventListener("click",resetgame);
+
+</script>
+
+</body>
+</html>
